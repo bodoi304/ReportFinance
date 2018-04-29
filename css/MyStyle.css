@@ -1,0 +1,59 @@
+﻿body{
+    font-family :Roboto Regular !important;
+}
+.HeaderGrid
+{
+    height:40px;
+        background-color:#187037;
+        color:white ;
+         font-weight :bold ;
+        text-align :Center;
+}
+.CommanNewGrid{
+    color:white !important;
+    text-decoration :none !important;
+}
+.CellGrid
+{
+    height:32px
+}
+
+.EditTable
+{
+    
+}
+
+.EditTable td
+{
+    padding-bottom  : 10px;
+    padding-right :10px
+}
+
+.EditTable .LabelTable
+{
+    vertical-align :top ;
+    padding-left :10px;
+    width: 13% ;
+}
+.EditTable .LabelContent
+{
+    vertical-align :top ;
+
+}
+.Mynotify{
+    width:50%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
