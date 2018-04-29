@@ -155,7 +155,7 @@ namespace ReportFinance.ManageUsers.ManageUsers
 
         protected void grd_DSUsers_RowCommand(object sender, ASPxGridViewRowCommandEventArgs e)
         {
-            ImageButton Link = (ImageButton)e.CommandSource;
+            ImageButton Link = (ImageButton)e.CommandSource; 
             if (Link.CommandName == "cmdKhoa")  
             {
                 String[] key = e.KeyValue.ToString().Split('|');
