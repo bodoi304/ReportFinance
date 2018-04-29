@@ -150,7 +150,7 @@ namespace ReportFinance.ManageUsers.ManageUsers
 
         protected void grd_DSUsers_BeforeColumnSortingGrouping(object sender, ASPxGridViewBeforeColumnGroupingSortingEventArgs e)
         {
-            Bindata();
+            Bindata(); 
         }
 
         protected void grd_DSUsers_RowCommand(object sender, ASPxGridViewRowCommandEventArgs e)
