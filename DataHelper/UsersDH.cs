@@ -2,6 +2,7 @@
 using ReportFinance.Common;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Text;
 
@@ -16,6 +17,29 @@ namespace DataHelper
             {
 
                 userList = (from s in context.Users select s).ToList();
+
+
+            }
+            return userList;
+        }
+
+        public List<Users_SelectUsersNoRole_Result> SelectUsersNoRole(Int32 idRoles)
+        {
+            List<Users_SelectUsersNoRole_Result> userList;
+            using (var context = new ManageUsersEntities())
+            {
+                userList = context.Users_SelectUsersNoRole(idRoles).ToList<Users_SelectUsersNoRole_Result>();
+            }
+            return userList;
+        }
+
+        public List<User> getUsersByIdLogInLike(String idLogin)
+        {
+            List<User> userList;
+            using (var context = new ManageUsersEntities())
+            {
+
+                userList = (from s in context.Users where s.Id_Login.Contains(idLogin) select s).ToList();
 
 
             }

@@ -25,6 +25,7 @@
     <link href="/css/MyStyle.css" rel="stylesheet" />
     <script src="/js/pnotify.js"></script>
     <link href="/css/pnotify.css" rel="stylesheet" />
+
     <script>
 
         
@@ -169,6 +170,7 @@
                                 <ul id="menu-academico-sub">
                                     <li id="menu-academico-avaliacoes"><a href="/ManageUsers/ManageRoles/ManageRolesMain.aspx" data-toggle="tooltip" title="Quản Lý Role">Quản Lý Role</a></li>
                                     <li id="menu-academico-avaliacoes"><a href="/ManageUsers/ManageUsers/ManageUsersMain.aspx" data-toggle="tooltip" title="Quản Lý Tài Khoản">Quản Lý Tài Khoản</a></li>
+                                      <li id="menu-academico-avaliacoes"><a href="/ManageUsers/ManageRules/ManageRulesMain.aspx" data-toggle="tooltip" title="Quản Lý Phân Quyền Theo Roles">Quản Lý Phân Quyền Theo Roles</a></li>
                                 </ul>
                             
                             </li>

@@ -54,5 +54,40 @@ namespace DataHelper
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MenuItemRoles_InsertItem", menuItem_IDParameter, role_IDParameter);
         }
+    
+        public virtual int ApplicationUserRoles_DeleteItem(Nullable<long> userId, Nullable<int> roleID)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(long));
+    
+            var roleIDParameter = roleID.HasValue ?
+                new ObjectParameter("RoleID", roleID) :
+                new ObjectParameter("RoleID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ApplicationUserRoles_DeleteItem", userIdParameter, roleIDParameter);
+        }
+    
+        public virtual int ApplicationUserRoles_InsertItem(Nullable<long> userId, Nullable<int> roleID)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(long));
+    
+            var roleIDParameter = roleID.HasValue ?
+                new ObjectParameter("RoleID", roleID) :
+                new ObjectParameter("RoleID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ApplicationUserRoles_InsertItem", userIdParameter, roleIDParameter);
+        }
+    
+        public virtual ObjectResult<Users_SelectUsersNoRole_Result> Users_SelectUsersNoRole(Nullable<int> iDRole)
+        {
+            var iDRoleParameter = iDRole.HasValue ?
+                new ObjectParameter("IDRole", iDRole) :
+                new ObjectParameter("IDRole", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Users_SelectUsersNoRole_Result>("Users_SelectUsersNoRole", iDRoleParameter);
+        }
     }
 }

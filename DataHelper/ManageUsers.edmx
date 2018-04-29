@@ -208,12 +208,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="ApplicationUserRoles_DeleteItem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="bigint" Mode="In" />
+          <Parameter Name="RoleID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ApplicationUserRoles_InsertItem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="bigint" Mode="In" />
+          <Parameter Name="RoleID" Type="int" Mode="In" />
+        </Function>
         <Function Name="MenuItemRoles_DeleteByRoleID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IDRole" Type="int" Mode="In" />
         </Function>
         <Function Name="MenuItemRoles_InsertItem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MenuItem_ID" Type="varchar" Mode="In" />
           <Parameter Name="Role_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Users_SelectUsersNoRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDRole" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="ManageUsersModelStoreContainer">
           <EntitySet Name="AccountLogs" EntityType="Self.AccountLogs" Schema="dbo" store:Type="Tables" />
@@ -291,6 +302,17 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <FunctionImport Name="ApplicationUserRoles_DeleteItem">
+            <Parameter Name="UserId" Mode="In" Type="Int64" />
+            <Parameter Name="RoleID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ApplicationUserRoles_InsertItem">
+            <Parameter Name="UserId" Mode="In" Type="Int64" />
+            <Parameter Name="RoleID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Users_SelectUsersNoRole" ReturnType="Collection(ManageUsersModel.Users_SelectUsersNoRole_Result)">
+            <Parameter Name="IDRole" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="AccountLog">
           <Key>
@@ -375,6 +397,10 @@
           <End Type="ManageUsersModel.Role" Role="Role" Multiplicity="*" />
           <End Type="ManageUsersModel.User" Role="User" Multiplicity="*" />
         </Association>
+        <ComplexType Name="Users_SelectUsersNoRole_Result">
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Id_login" Nullable="false" MaxLength="50" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -479,6 +505,16 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="ApplicationUserRoles_DeleteItem" FunctionName="ManageUsersModel.Store.ApplicationUserRoles_DeleteItem" />
+          <FunctionImportMapping FunctionImportName="ApplicationUserRoles_InsertItem" FunctionName="ManageUsersModel.Store.ApplicationUserRoles_InsertItem" />
+          <FunctionImportMapping FunctionImportName="Users_SelectUsersNoRole" FunctionName="ManageUsersModel.Store.Users_SelectUsersNoRole">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="ManageUsersModel.Users_SelectUsersNoRole_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_login" ColumnName="Id_login" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

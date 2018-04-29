@@ -1,59 +1,61 @@
-﻿body{
-    font-family :Roboto Regular !important;
-}
-.HeaderGrid
-{
-    height:40px;
-        background-color:#187037;
-        color:white ;
-         font-weight :bold ;
-        text-align :Center;
-}
-.CommanNewGrid{
-    color:white !important;
-    text-decoration :none !important;
-}
-.CellGrid
-{
-    height:32px
+﻿body {
+    font-family: Roboto Regular !important;
 }
 
-.EditTable
-{
-    
+.HeaderGrid {
+    height: 40px;
+    background-color: #187037;
+    color: white;
+    font-weight: bold;
+    text-align: Center;
 }
 
-.EditTable td
-{
-    padding-bottom  : 10px;
-    padding-right :10px
+.CommanNewGrid {
+    color: white !important;
+    text-decoration: none !important;
 }
 
-.EditTable .LabelTable
-{
-    vertical-align :top ;
-    padding-left :10px;
-    width: 13% ;
-}
-.EditTable .LabelContent
-{
-    vertical-align :top ;
-
-}
-.Mynotify{
-    width:50%;
+.CellGrid {
+    height: 32px;
 }
 
+.EditTable {
+}
 
+    .EditTable td {
+        padding-bottom: 10px;
+        padding-right: 10px;
+    }
 
+    .EditTable .LabelTable {
+        vertical-align: top;
+        padding-left: 10px;
+        width: 13%;
+    }
 
+    .EditTable .LabelContent {
+        vertical-align: top;
+    }
 
+.Mynotify {
+    width: 50%;
+}
 
+.flex-center {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-
-
-
-
-
-
-
+.center-screen {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100px;
+    height: 100px;
+    z-index: 999999;
+}

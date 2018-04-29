@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataHelper.Object;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,20 @@ namespace DataHelper
             }
             return role;
         }
+
+        public Role getListUserofRole(Int32 Idrole)
+        {
+            Role role;
+            using (var context = new ManageUsersEntities())
+            {
+
+                role = (from s in context.Roles where s.Id == Idrole select s).FirstOrDefault();
+                var a = role.Users;
+
+            }
+            return role;
+        }
+
         public void deleteRoles(Int32 IDrole)
         {
 
@@ -90,6 +105,33 @@ namespace DataHelper
                     context.MenuItemRoles_InsertItem (item.Item_ID  ,IDrole);
                 }
                
+            }
+
+        }
+
+        public void insertUsersToRole(List<ApplicationUserRolesObj> lstObj )
+        {
+
+            using (var context = new ManageUsersEntities())
+            {
+                foreach (ApplicationUserRolesObj item in lstObj)
+                {
+                    context.ApplicationUserRoles_InsertItem(item.UserId, item.RoleId);
+                }
+
+            }
+
+        }
+        public void deleteUsersToRole(List<ApplicationUserRolesObj> lstObj)
+        {
+
+            using (var context = new ManageUsersEntities())
+            {
+                foreach (ApplicationUserRolesObj item in lstObj)
+                {
+                    context.ApplicationUserRoles_DeleteItem(item.UserId, item.RoleId);
+                }
+
             }
 
         }

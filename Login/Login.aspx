@@ -13,6 +13,8 @@
     <!-- //Custom Theme files -->
     <!-- web font -->
     <link href='//fonts.googleapis.com/css?family=Dosis:400,300,200,500,600,700,800' rel='stylesheet' type='text/css'>
+        <script src="/js/pnotify.js"></script>
+    <link href="/css/pnotify.css" rel="stylesheet" />
     <!-- //web font -->
 </head>
 <body>
