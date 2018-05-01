@@ -40,6 +40,15 @@ namespace ReportFinance.ManageUsers.ManageRoles {
         protected global::System.Web.UI.WebControls.View vwRole;
         
         /// <summary>
+        /// HF control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxHiddenField HF;
+        
+        /// <summary>
         /// grd_DSRole control.
         /// </summary>
         /// <remarks>

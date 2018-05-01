@@ -7,117 +7,90 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Housing.Admin.QuanLyPhong {
+namespace ReportFinance {
     
     
-    public partial class AdminPhong {
+    public partial class test {
         
         /// <summary>
-        /// head control.
+        /// PopupControl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
+        protected global::DevExpress.Web.ASPxPopupControl PopupControl;
         
         /// <summary>
-        /// form1 control.
+        /// formLayout control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::DevExpress.Web.ASPxFormLayout formLayout;
         
         /// <summary>
-        /// ScriptManagerCustom control.
+        /// tbFirstName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManagerCustom;
+        protected global::DevExpress.Web.ASPxTextBox tbFirstName;
         
         /// <summary>
-        /// PopupDoiMatKhau control.
+        /// tbLastName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxPopupControl PopupDoiMatKhau;
+        protected global::DevExpress.Web.ASPxTextBox tbLastName;
         
         /// <summary>
-        /// PopupControlContentControl control.
+        /// deBirthDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.PopupControlContentControl PopupControlContentControl;
+        protected global::DevExpress.Web.ASPxDateEdit deBirthDate;
         
         /// <summary>
-        /// pnPopupChangePassword control.
+        /// tbCountry control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnPopupChangePassword;
+        protected global::DevExpress.Web.ASPxTextBox tbCountry;
         
         /// <summary>
-        /// txtMatKhauCu control.
+        /// tbCity control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxTextBox txtMatKhauCu;
+        protected global::DevExpress.Web.ASPxTextBox tbCity;
         
         /// <summary>
-        /// txtMatKhauMoi control.
+        /// tbAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxTextBox txtMatKhauMoi;
+        protected global::DevExpress.Web.ASPxTextBox tbAddress;
         
         /// <summary>
-        /// txtXacNhanMatKhauMoi control.
+        /// mNotes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DevExpress.Web.ASPxTextBox txtXacNhanMatKhauMoi;
-        
-        /// <summary>
-        /// lkDoiMatKhau control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxButton lkDoiMatKhau;
-        
-        /// <summary>
-        /// lkLogOut control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DevExpress.Web.ASPxButton lkLogOut;
-        
-        /// <summary>
-        /// ContentPlaceHolder1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
+        protected global::DevExpress.Web.ASPxMemo mNotes;
     }
 }

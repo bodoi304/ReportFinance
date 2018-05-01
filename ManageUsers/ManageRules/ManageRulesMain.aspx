@@ -14,7 +14,7 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:ScriptManager runat="server"></asp:ScriptManager>
+
     <div class="panel panel-widget forms-panel">
         <div class="forms">
             <div class="inline-form widget-shadow">
@@ -71,7 +71,7 @@
                                                     <table cellpadding="2" cellspacing="0" width="100%">
                                                          <tr>
                                                     <td>
-                                                        <dx:ASPxTextBox ID="txtUser" runat="server" Width="100%" placeholder="Tìm kiếm theo tài khoản đăng nhập" OnTextChanged="txtUser_TextChanged" AutoPostBack="True"></dx:ASPxTextBox>
+                                                        <dx:ASPxTextBox ID="txtUser" NullText ="Tìm kiếm theo tài khoản đăng nhập" runat="server" Width="100%"  OnTextChanged="txtUser_TextChanged" AutoPostBack="True"></dx:ASPxTextBox>
                                                     </td>
                                                 </tr>
                                                         <tr>
@@ -120,7 +120,7 @@
                                                     <table cellpadding="2" cellspacing="0" width="100%">
                                                                            <tr>
                                                     <td>
-                                                        <dx:ASPxTextBox ID="txtUserOfRole" runat="server" Width="100%" placeholder="Tìm kiếm theo tài khoản đăng nhập" AutoPostBack="True" OnTextChanged="txtUserOfRole_TextChanged" ></dx:ASPxTextBox>
+                                                        <dx:ASPxTextBox ID="txtUserOfRole" runat="server" Width="100%" NullText ="Tìm kiếm theo tài khoản đăng nhập" AutoPostBack="True" OnTextChanged="txtUserOfRole_TextChanged" ></dx:ASPxTextBox>
                                                     </td>
                                                 </tr>
                                                         <tr>

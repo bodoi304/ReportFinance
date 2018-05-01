@@ -4,6 +4,16 @@
 <%@ Register Assembly="DevExpress.Web.ASPxTreeList.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxTreeList" TagPrefix="dx" %>
 <%@ Register Src="../Common/TreeListFunction.ascx" TagName="TreeListFunction" TagPrefix="uc1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script type="text/javascript">
+        function MasterGrid_DetailRowCollapsing(s, e) {
+            var key = gridRole.GetRowKey(e.visibleIndex);
+            hf.Set('collapsedRowKey', key);
+        }
+        function MasterGrid_EndCallback(s, e) {
+            if (hf.Contains('collapsedRowKey'))
+                hf.Remove('collapsedRowKey');
+        }
+    </script>
 </asp:Content>
 
 
@@ -23,13 +33,17 @@
                             <div class="form-grids widget-shadow" data-example-id="basic-forms" style="margin-top: 15px">
                                 <asp:MultiView ID="mtView" runat="server">
                                     <asp:View ID="vwRole" runat="server">
+                                        <dx:ASPxHiddenField ID="HF" runat="server" ClientInstanceName="hf"></dx:ASPxHiddenField>
                                         <dx:ASPxGridView ID="grd_DSRole" ClientInstanceName="gridRole" runat="server" KeyFieldName="Id"
                                             Width="100%" AutoGenerateColumns="False" OnRowDeleting="grd_DSRole_RowDeleting"
                                             OnRowUpdating="grd_DSRole_RowUpdating" OnRowInserting="grd_DSRole_RowInserting"
                                             OnRowCommand="grd_DSRole_RowCommand" OnPageIndexChanged="grd_DSRole_PageIndexChanged"
                                             OnProcessColumnAutoFilter="grd_DSRole_ProcessColumnAutoFilter"
-                                            OnRowValidating="grd_DSRole_RowValidating" OnBeforeColumnSortingGrouping="grd_DSRole_BeforeColumnSortingGrouping">
-                                            <ClientSideEvents EndCallback="OnGridNotifyEndCallback" />                                    
+                                            OnRowValidating="grd_DSRole_RowValidating" OnBeforeColumnSortingGrouping="grd_DSRole_BeforeColumnSortingGrouping" >
+                                            <ClientSideEvents DetailRowCollapsing="MasterGrid_DetailRowCollapsing" EndCallback="function(s, e) {
+OnGridNotifyEndCallback(s, e);
+	MasterGrid_EndCallback(s, e);
+}" />
                                             <Columns>
                                                 <dx:GridViewCommandColumn ShowNewButtonInHeader="true" ShowEditButton="true" VisibleIndex="0" ShowDeleteButton="true" Width="100" />
 
@@ -37,13 +51,13 @@
                                                     Width="35px">
                                                     <Settings AllowAutoFilter="False" />
                                                 </dx:GridViewDataTextColumn>
-                                                <dx:GridViewDataTextColumn FieldName="Name" VisibleIndex="1" Caption="Tên Role"
+                                                <dx:GridViewDataTextColumn FieldName="Name" VisibleIndex="2" Caption="Tên Role"
                                                     Width="30%">
                                                 </dx:GridViewDataTextColumn>
-                                                <dx:GridViewDataTextColumn FieldName="Description" VisibleIndex="1" Caption="Mô tả">
+                                                <dx:GridViewDataTextColumn FieldName="Description" VisibleIndex="3" Caption="Mô tả">
                                                 </dx:GridViewDataTextColumn>
                                                 <dx:GridViewDataTextColumn Caption="Roles" ReadOnly="True"
-                                                    VisibleIndex="1" Width="50" >
+                                                    VisibleIndex="4" Width="50">
                                                     <DataItemTemplate>
                                                         <asp:LinkButton ID="btnRole" runat="server"
                                                             CommandArgument='' CommandName="cmdRole"
@@ -53,24 +67,60 @@
                                                 </dx:GridViewDataTextColumn>
                                             </Columns>
                                             <Templates>
+
+                                                <DetailRow>
+                                                    <dx:ASPxGridView ID="grd_DSUserOfRole" ClientInstanceName="grd_DSUserOfRole" runat="server" KeyFieldName="Id"
+                                                        Width="100%" AutoGenerateColumns="False" OnBeforePerformDataSelect="grd_DSUserOfRole_BeforePerformDataSelect">
+
+                                                        <Columns>
+
+                                                            <dx:GridViewDataTextColumn FieldName="Id_Login" VisibleIndex="1" Caption="Tên đăng nhập">
+                                                                <Settings AllowAutoFilter="False" />
+                                                            </dx:GridViewDataTextColumn>
+                                                            <dx:GridViewDataTextColumn FieldName="PhoneNumber" VisibleIndex="1" Caption="Số điện thoại"
+                                                                Width="30%">
+                                                            </dx:GridViewDataTextColumn>
+                                                            <dx:GridViewDataTextColumn FieldName="UserName" VisibleIndex="1" Caption="Họ và tên">
+                                                            </dx:GridViewDataTextColumn>
+                                                            <dx:GridViewDataCheckColumn FieldName="LockoutEnabled" VisibleIndex="1" Caption="Trạng thái khóa"></dx:GridViewDataCheckColumn>
+                                                        </Columns>
+                                                        <Styles>
+                                                            <Header CssClass="HeaderGrid"></Header>
+                                                        </Styles>
+                                                    </dx:ASPxGridView>
+
+                                                </DetailRow>
+
                                                 <EditForm>
-                                                    <table class="EditTable" style="width: 100%">
-                                                        <tr>
-                                                            <td class="LabelTable">Tên Role<span style="color:red">*</span>
-                                                            </td>
-                                                            <td style="width: 50%">
-                                                                <dx:ASPxTextBox runat="server" ID="txtName" Text='<%# Bind("Name") %>' Width="100%" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="LabelTable">Mô tả
-                                                            </td>
-                                                            <td>
-                                                                <dx:ASPxMemo runat="server" ID="txtNote" Text='<%# Bind("Description")%>' Width="100%" Height="100px" />
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                    <div style="text-align: right; padding: 10px">
+                                                       <dx:ASPxFormLayout runat="server" ID="LayOutThemSua">
+                                                    <SettingsAdaptivity AdaptivityMode="SingleColumnWindowLimit" SwitchToSingleColumnAtWindowInnerWidth="576" />
+                                                    <Items>
+                                                        <dx:LayoutGroup Caption="ROLE" ColCount="1" GroupBoxDecoration="HeadingLine" Paddings-Padding="0" Paddings-PaddingTop="10">
+                                                            <GroupBoxStyle>
+                                                                <Caption Font-Bold="true" Font-Size="16" CssClass="groupCaption" />
+                                                            </GroupBoxStyle>
+                                                            <Items>
+                                                                <dx:LayoutItem Caption="Tên Role *:">
+                                                                    <LayoutItemNestedControlCollection>
+                                                                        <dx:LayoutItemNestedControlContainer>
+                                                                             <dx:ASPxTextBox runat="server" ID="txtName" Text='<%# Bind("Name") %>' Width="100%" />
+                                                                        </dx:LayoutItemNestedControlContainer>
+                                                                    </LayoutItemNestedControlCollection>
+                                                                </dx:LayoutItem>
+                                                                <dx:LayoutItem Caption="Mô tả:">
+                                                                    <LayoutItemNestedControlCollection>
+                                                                        <dx:LayoutItemNestedControlContainer>
+                                                                              <dx:ASPxMemo runat="server" ID="txtNote" Text='<%# Bind("Description")%>' Width="100%" Height="100px" />
+                                                                        </dx:LayoutItemNestedControlContainer>
+                                                                    </LayoutItemNestedControlCollection>
+                                                                </dx:LayoutItem>
+                                                    
+                                                            </Items>
+                                                        </dx:LayoutGroup>
+                                                    </Items>
+                                                </dx:ASPxFormLayout>
+                                                   
+                                                    <div style="text-align: right; padding: 10px;padding-right :50px">
                                                         <dx:ASPxGridViewTemplateReplacement ID="UpdateButton" ReplacementType="EditFormUpdateButton" runat="server" />
                                                         <dx:ASPxGridViewTemplateReplacement ID="CancelButton" ReplacementType="EditFormCancelButton" runat="server" />
                                                     </div>

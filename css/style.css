@@ -654,10 +654,9 @@ ul.qty {
     }
 
         .top_left h2 span {
-            color: #000000;
+    
             margin-right: 0px;
             padding: 1px 10px;
-            background: url(../images/phon.png) no-repeat 4px 2px;
             -webkit-transition: all 0.3s ease-in-out;
             -moz-transition: all 0.3s ease-in-out;
             -o-transition: all 0.3s ease-in-out;

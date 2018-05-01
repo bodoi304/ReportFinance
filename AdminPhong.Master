@@ -1,5 +1,7 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="AdminPhong.master.cs" Inherits="Housing.Admin.QuanLyPhong.AdminPhong" %>
 
+<%@ Register Assembly="DevExpress.Web.v17.1, Version=17.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web" TagPrefix="dx" %>
+
 <!DOCTYPE html>
 
 
@@ -28,12 +30,12 @@
 
     <script>
 
-        
 
         function OnGridNotifyEndCallback(s, e) {
-            if (s.cpClear == "clear") {
-                PNotify.removeAll()
-            }
+
+
+            PNotify.removeAll()
+
             if (s.cpUpdateStatus) {
 
                 if (s.cpUpdateStatus == "Success") {
@@ -41,16 +43,15 @@
                         text: s.cpMess,
                         delay: 3000,
                         hide: true,
-                        width: '50%',
+                        width: '38%',
                         type: 'info'
                     });
                 }
                 if (s.cpUpdateStatus == "Failure") {
-                    if (s.cpMess.charAt(0) == '[')
-                    {
+                    if (s.cpMess.charAt(0) == '[') {
                         var a = JSON.parse(s.cpMess);
                     }
-                    
+
                     if (a instanceof Array) {
 
                         for (var prop in a) {
@@ -59,7 +60,7 @@
                                 text: a[prop].error,
                                 delay: 500000,
                                 hide: true,
-                                width: '50%',
+                                width: '38%',
                                 type: 'error'
                             });
                         }
@@ -67,17 +68,19 @@
                     else {
 
                         new PNotify({
-                            text: s.cpMess,
+                            text: s.cpMess.replace("\r", "").replace("\n", ""),
                             delay: 500000,
                             hide: true,
-                            width: '50%',
+                            width: '38%',
                             type: 'error'
                         });
                     }
 
                 }
-     
+
                 delete s.cpUpdateStatus;
+
+
             }
         }
     </script>
@@ -86,6 +89,62 @@
 </head>
 <body>
     <form id="form1" runat="server">
+        <asp:ScriptManager runat="server" ID="ScriptManagerCustom"></asp:ScriptManager>
+        <dx:ASPxPopupControl ID="PopupDoiMatKhau" runat="server" CloseAction="OuterMouseClick"
+            PopupElementID="ShowButton" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" AllowDragging="True"
+            ShowFooter="True" Width="500px"  Height="160px" HeaderText="ĐỔI MẬT KHẨU" ClientInstanceName="ClientPopupControl" OnWindowCallback="PopupDoiMatKhau_WindowCallback">
+            <ContentCollection>
+                <dx:PopupControlContentControl ID="PopupControlContentControl" runat="server">
+                    <asp:Panel ID="pnPopupChangePassword" runat="server">
+                        <table class="EditTable" style="width: 100%">
+                            <tr>
+                                <td class="LabelTable">Mật khẩu cũ:<span style="color: red">*</span>
+                                </td>
+                                <td class="LabelContent">
+                                    <dx:ASPxTextBox ID="txtMatKhauCu" runat="server" Width="100%" Password="True" NullText="Mật khẩu cũ">
+                                    </dx:ASPxTextBox>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class="LabelTable">Mật khẩu mới:<span style="color: red">*</span>
+                                </td>
+                                <td>
+                                    <dx:ASPxTextBox ID="txtMatKhauMoi" runat="server" Width="100%" Password="True" NullText="Mật khẩu mới">
+                                    </dx:ASPxTextBox>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class="LabelTable">Xác nhận mật khẩu:<span style="color: red">*</span>
+                                </td>
+                                <td style="width: 50%">
+                                    <dx:ASPxTextBox ID="txtXacNhanMatKhauMoi" runat="server" Width="100%" Password="True" NullText="Xác nhận mật khẩu">
+                                    </dx:ASPxTextBox>
+                                </td>
+
+                            </tr>
+
+                        </table>
+                    </asp:Panel>
+
+                </dx:PopupControlContentControl>
+            </ContentCollection>
+            <ClientSideEvents EndCallback="OnGridNotifyEndCallback" />
+            <FooterStyle HorizontalAlign="Center" VerticalAlign="Middle">
+            <Paddings PaddingRight="100px" />
+            </FooterStyle>
+            <FooterTemplate >
+                <div style="display: table; margin: 6px 6px 6px auto;text-align:center ">
+                    <dx:ASPxButton ID="UpdateButton" runat="server" Text="Cập nhập mật khẩu" AutoPostBack="False">
+                        <ClientSideEvents Click="function(s, e) {ClientPopupControl.PerformCallback()  }" />
+                    </dx:ASPxButton>
+                    <dx:ASPxButton ID="btCancel" runat="server" Text="Thoát" Width="80px" AutoPostBack="False" Style="margin-left: 20px">
+                        <ClientSideEvents Click="function(s, e) { ClientPopupControl.Hide();  PNotify.removeAll() }" />
+                    </dx:ASPxButton>
+                </div>
+            </FooterTemplate>
+        </dx:ASPxPopupControl>
         <div class="page-container">
             <!--/content-inner-->
             <div class="left-content">
@@ -103,10 +162,20 @@
                                     </ul>
                                 </div>
                                 <div class="top_left">
-                                    <h2><span></span>Call us : 091 222 3364
-                                        |
-                                        <asp:LinkButton ID="lkLogOut" runat="server" OnClick="lkLogOut_Click">Đăng Xuất</asp:LinkButton>
-                                    </h2>
+
+
+                                    <dx:ASPxButton ID="lkDoiMatKhau" runat="server" Text="ĐỔI MẬT KHẨU" AutoPostBack="False" RenderMode="Link">
+                                        <ClientSideEvents Click="function(s, e) {
+ClientPopupControl.Show();	
+}" />
+                                    </dx:ASPxButton>
+
+                                    <span style="color: rgb(65,200,60)">| </span>
+                                    <dx:ASPxButton ID="lkLogOut" runat="server" Text="ĐĂNG XUẤT" OnClick="lkLogOut_Click" RenderMode="Link"></dx:ASPxButton>
+                                    <span style="color: white; text-transform: uppercase"><%= nameUser %></span>
+
+
+
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -165,15 +234,15 @@
                 <div style="border-top: 1px ridge rgba(255, 255, 255, 0.15)"></div>
                 <div class="menu">
                     <ul id="menu">
-                        <li><a href="/Default.aspx" data-toggle="tooltip" title="Trang Chủ"><i class="fa fa-tachometer"></i><span>Trang Chủ</span></a></li>
-                         <li id="menu-academico"><a href="#" data-toggle="tooltip" title="Quản Lý Đăng Nhập"><i class="fa fa-lock"></i><span>Quản Lý Đăng Nhập</span> <span class="fa fa-angle-right" style="float: right"></span></a>
-                                <ul id="menu-academico-sub">
-                                    <li id="menu-academico-avaliacoes"><a href="/ManageUsers/ManageRoles/ManageRolesMain.aspx" data-toggle="tooltip" title="Quản Lý Role">Quản Lý Role</a></li>
-                                    <li id="menu-academico-avaliacoes"><a href="/ManageUsers/ManageUsers/ManageUsersMain.aspx" data-toggle="tooltip" title="Quản Lý Tài Khoản">Quản Lý Tài Khoản</a></li>
-                                      <li id="menu-academico-avaliacoes"><a href="/ManageUsers/ManageRules/ManageRulesMain.aspx" data-toggle="tooltip" title="Quản Lý Phân Quyền Theo Roles">Quản Lý Phân Quyền Theo Roles</a></li>
-                                </ul>
-                            
-                            </li>
+                        <li><a href="/DashBoard.aspx" data-toggle="tooltip" title="Trang Chủ"><i class="fa fa-tachometer"></i><span>Trang Chủ</span></a></li>
+                        <li id="menu-academico"><a href="#" data-toggle="tooltip" title="Quản Lý Đăng Nhập"><i class="fa fa-lock"></i><span>Quản Lý Đăng Nhập</span> <span class="fa fa-angle-right" style="float: right"></span></a>
+                            <ul id="menu-academico-sub">
+                                <li id="menu-academico-avaliacoes"><a href="/ManageUsers/ManageRoles/ManageRolesMain.aspx" data-toggle="tooltip" title="Quản Lý Role">Quản Lý Role</a></li>
+                                <li id="menu-academico-avaliacoes"><a href="/ManageUsers/ManageUsers/ManageUsersMain.aspx" data-toggle="tooltip" title="Quản Lý Tài Khoản">Quản Lý Tài Khoản</a></li>
+                                <li id="menu-academico-avaliacoes"><a href="/ManageUsers/ManageRules/ManageRulesMain.aspx" data-toggle="tooltip" title="Quản Lý Phân Quyền Theo Roles">Quản Lý Phân Quyền Theo Roles</a></li>
+                            </ul>
+
+                        </li>
                         <li><a href="/Default.aspx" data-toggle="tooltip" title="Trang Chủ"><i class="fa fa-table"></i><span>Báo Cáo</span></a></li>
 
                     </ul>

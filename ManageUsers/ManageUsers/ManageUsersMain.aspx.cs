@@ -19,7 +19,7 @@ namespace ReportFinance.ManageUsers.ManageUsers
         {
             if (!IsPostBack)
             {
-                grd_DSUsers = Utils.setDisplayGridView(grd_DSUsers);
+                grd_DSUsers = Utils.setDisplayGridView(grd_DSUsers,true );
                 Bindata();
             }
         }
@@ -53,9 +53,9 @@ namespace ReportFinance.ManageUsers.ManageUsers
             {
                 e.Cancel = true;
                 Int32 idUser = Convert.ToInt32(e.Keys[grd_DSUsers.KeyFieldName]);
-                Panel pnLayData = grd_DSUsers.FindEditFormTemplateControl("pnLayData") as Panel;
+                ASPxFormLayout pnLayData = grd_DSUsers.FindEditFormTemplateControl("LayOutThemSua") as ASPxFormLayout;
                 User user = new User();
-                Utils.setView2Object<User>(user, pnLayData);
+                Utils.setView2ObjectLayout<User>(user, pnLayData);
                 ctlUser.updateUsers(idUser,user);
                 Bindata();
                 Utils.notifierGrid(grd_DSUsers, Constant.NOTIFY_SUCCESS, "Bạn đã cập nhập thành công tài khoản [" + user.Id_Login + "]");
@@ -75,9 +75,9 @@ namespace ReportFinance.ManageUsers.ManageUsers
             {
 
                 e.Cancel = true;
-                Panel pnLayData = grd_DSUsers.FindEditFormTemplateControl("pnLayData") as Panel;
+                ASPxFormLayout pnLayData = grd_DSUsers.FindEditFormTemplateControl("LayOutThemSua") as ASPxFormLayout;
                 User user = new User();
-                Utils.setView2Object<User>(user, pnLayData);
+                Utils.setView2ObjectLayout<User>(user, pnLayData);
                 user.LockoutEnabled = false;
                 user.Password = Utils.Encrypt(user.Password);
                 getFirstLastName(user);
@@ -119,15 +119,16 @@ namespace ReportFinance.ManageUsers.ManageUsers
         {
             Utils.notifierListClearGrid(grd_DSUsers, Constant.NOTIFY_CLEAR);
             List<Error_Obj> lstError = new List<Error_Obj>();
-            ASPxTextBox txtId_Login = grd_DSUsers.FindEditFormTemplateControl("Id_Login") as ASPxTextBox;
-            ASPxTextBox txtPassword = grd_DSUsers.FindEditFormTemplateControl("Password") as ASPxTextBox;
-            ASPxTextBox txtPasswordConfirm = grd_DSUsers.FindEditFormTemplateControl("PasswordConfirm") as ASPxTextBox;
+            ASPxFormLayout LayOutThemSua = grd_DSUsers.FindEditFormTemplateControl("LayOutThemSua") as ASPxFormLayout;
+            ASPxTextBox txtId_Login = LayOutThemSua.FindControl ("Id_Login") as ASPxTextBox;
+            ASPxTextBox txtPassword = LayOutThemSua.FindControl("Password") as ASPxTextBox;
+            ASPxTextBox txtPasswordConfirm = LayOutThemSua.FindControl("PasswordConfirm") as ASPxTextBox;
             if (String.IsNullOrEmpty(txtId_Login.Text))
             {
                 lstError.Add(new Error_Obj { error = "[Tên đăng nhập] không được để trống." });
             }
 
-            User user = ctlUser.getUsersByIDLogin(txtId_Login.Text);
+            User user = ctlUser.getUsersByIDLogin(txtId_Login.Text.Trim ());
             if (user != null && grd_DSUsers.IsNewRowEditing)
             {
                 lstError.Add(new Error_Obj { error = "Tên đăng nhập đã tồn tại." });
@@ -165,6 +166,20 @@ namespace ReportFinance.ManageUsers.ManageUsers
 
                 Bindata();
             }
+        }
+        protected void grd_DSRoleOfUser_BeforePerformDataSelect(object sender, EventArgs e)
+        {
+
+            if (!HF.Contains("collapsedRowKey"))
+            {
+                ASPxGridView grd_DSUsers = sender as ASPxGridView;
+                Object objKey = grd_DSUsers.GetMasterRowKeyValue();
+                String[] str = objKey.ToString().Split('|');
+                Int32 idUser = Convert.ToInt32(str[0]);
+                User  user = ctlUser.getUsersByID(idUser);
+                grd_DSUsers.DataSource = user.Roles;
+            }
+
         }
     }
 }

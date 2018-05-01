@@ -17,7 +17,7 @@ namespace ReportFinance.ManageUsers.ManageRoles
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
             TreeListFunction1.OnBack += () =>
             {
                 mtView.SetActiveView(vwRole);
@@ -26,7 +26,7 @@ namespace ReportFinance.ManageUsers.ManageRoles
             {
 
                 mtView.SetActiveView(vwRole);
-                grd_DSRole = Utils.setDisplayGridView(grd_DSRole);
+                grd_DSRole = Utils.setDisplayGridView(grd_DSRole, true);
                 BindataThemNhanh();
             }
         }
@@ -60,8 +60,9 @@ namespace ReportFinance.ManageUsers.ManageRoles
             {
                 e.Cancel = true;
                 Int32 idRoles = Convert.ToInt32(e.Keys[grd_DSRole.KeyFieldName]);
-                ASPxMemo txtNote = grd_DSRole.FindEditFormTemplateControl("txtNote") as ASPxMemo;
-                ASPxTextBox txtName = grd_DSRole.FindEditFormTemplateControl("txtName") as ASPxTextBox;
+                ASPxFormLayout pnLayData = grd_DSRole.FindEditFormTemplateControl("LayOutThemSua") as ASPxFormLayout;
+                ASPxMemo txtNote = pnLayData.FindControl ("txtNote") as ASPxMemo;
+                ASPxTextBox txtName = pnLayData.FindControl("txtName") as ASPxTextBox;
                 ctlRole.updateRoles(idRoles, txtName.Text, txtNote.Text);
                 BindataThemNhanh();
                 Utils.notifierGrid(grd_DSRole, Constant.NOTIFY_SUCCESS, "Bạn đã cập nhập thành công cho Role có ID [" + idRoles.ToString() + "]");
@@ -80,8 +81,9 @@ namespace ReportFinance.ManageUsers.ManageRoles
             try
             {
                 e.Cancel = true;
-                ASPxMemo txtNote = grd_DSRole.FindEditFormTemplateControl("txtNote") as ASPxMemo;
-                ASPxTextBox txtName = grd_DSRole.FindEditFormTemplateControl("txtName") as ASPxTextBox;
+                ASPxFormLayout pnLayData = grd_DSRole.FindEditFormTemplateControl("LayOutThemSua") as ASPxFormLayout;
+                ASPxMemo txtNote = pnLayData.FindControl("txtNote") as ASPxMemo;
+                ASPxTextBox txtName = pnLayData.FindControl("txtName") as ASPxTextBox;
                 ctlRole.insertRoles(txtName.Text, txtNote.Text);
                 BindataThemNhanh();
                 Utils.notifierGrid(grd_DSRole, Constant.NOTIFY_SUCCESS, "Bạn đã thêm thành công Role có [" + txtName.Text + "]");
@@ -121,23 +123,44 @@ namespace ReportFinance.ManageUsers.ManageRoles
         protected void grd_DSRole_RowValidating(object sender, DevExpress.Web.Data.ASPxDataValidationEventArgs e)
         {
             Utils.notifierListClearGrid(grd_DSRole, Constant.NOTIFY_CLEAR);
-            List<Error_Obj >  lstError = new List<Error_Obj > ();
-            ASPxTextBox txtName = grd_DSRole.FindEditFormTemplateControl("txtName") as ASPxTextBox;
-            if (String.IsNullOrEmpty (txtName.Text ))
+            List<Error_Obj> lstError = new List<Error_Obj>();
+            ASPxFormLayout pnLayData = grd_DSRole.FindEditFormTemplateControl("LayOutThemSua") as ASPxFormLayout;
+            ASPxTextBox txtName = pnLayData.FindControl ("txtName") as ASPxTextBox;
+            if (String.IsNullOrEmpty(txtName.Text))
             {
-                lstError.Add(new Error_Obj {error = "Tên role không được để trống." });
+                lstError.Add(new Error_Obj { error = "[Tên role] không được để trống." });
             }
-            if (lstError .Count >0)
+            Role role = ctlRole.getRolesByName(txtName.Text.Trim ());
+            if (role != null && grd_DSRole.IsNewRowEditing)
+            {
+                lstError.Add(new Error_Obj { error = "[Tên role] đã tồn tại." });
+            }
+            if (lstError.Count > 0)
             {
                 e.Errors[grd_DSRole.Columns[0]] = "error";
                 Utils.notifierListErrorGrid(grd_DSRole, Constant.NOTIFY_FAILURE, lstError);
             }
-           
+
         }
 
         protected void grd_DSRole_BeforeColumnSortingGrouping(object sender, ASPxGridViewBeforeColumnGroupingSortingEventArgs e)
         {
             BindataThemNhanh();
+        }
+
+        protected void grd_DSUserOfRole_BeforePerformDataSelect(object sender, EventArgs e)
+        {
+
+            if (!HF.Contains("collapsedRowKey"))
+            {
+                ASPxGridView grd_DSUserOfRole = sender as ASPxGridView;
+                Object objKey = grd_DSUserOfRole.GetMasterRowKeyValue();
+                String[] str = objKey.ToString().Split('|');
+                Int32 idRole = Convert.ToInt32(str[0]);
+                Role role = ctlRole.getRolesByID(idRole);
+                grd_DSUserOfRole.DataSource = role.Users;
+            }
+
         }
     }
 }

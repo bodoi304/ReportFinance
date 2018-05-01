@@ -13,28 +13,30 @@
     <!-- //Custom Theme files -->
     <!-- web font -->
     <link href='//fonts.googleapis.com/css?family=Dosis:400,300,200,500,600,700,800' rel='stylesheet' type='text/css'>
-        <script src="/js/pnotify.js"></script>
+        <script src="/js/jquery-1.11.1.min.js"></script>
+    <script src="/js/pnotify.js"></script>
     <link href="/css/pnotify.css" rel="stylesheet" />
     <!-- //web font -->
 </head>
 <body>
     <!-- main -->
     <div class="main">
-        <div style="display: flex; align-items: center; justify-content: center; ">
-           <%-- <div style="flex:100%;  height: 100px">--%>
+        <div style="display: flex; align-items: center; justify-content: center;">
+            <%-- <div style="flex:100%;  height: 100px">--%>
 
-                <img src="images/loginlogo.png"  />
-           <%-- </div>--%>
+            <img src="images/loginlogo.png" />
+            <%-- </div>--%>
         </div>
         <form id="form1" runat="server">
             <div class="main-row">
                 <div class="agileits-top">
+                    <asp:TextBox ID="txtUser" runat="server" placeholder="Tên Đăng Nhập" required></asp:TextBox>
+                    <asp:TextBox ID="txtPassword" runat="server" placeholder="Mật Khẩu" required TextMode="Password"></asp:TextBox>
 
-                    <input class="text" type="text" name="Tên Đăng Nhập" placeholder="Tên Đăng Nhập" required>
-                    <input class="text" type="password" name="Mật Khẩu" placeholder="Mật Khẩu" required>
-                    <input type="submit" value="Đăng nhập">
-                    
-               <p>   <asp:CheckBox ID="chkGiuDN" runat="server"   /><a style ="font-family: Arial, sans-serif;"> Giữ Đăng Nhập</a></p>
+                    <asp:Button ID="btnDangNhap" runat="server" Text="Đăng nhập" OnClick="btnDangNhap_Click" />
+
+                    <p>
+                        <asp:CheckBox ID="chkGiuDN" runat="server" /><a style="font-family: Arial, sans-serif;"> Giữ Đăng Nhập</a></p>
                 </div>
             </div>
         </form>

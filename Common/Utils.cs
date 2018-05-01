@@ -15,7 +15,7 @@ namespace ReportFinance.Common
 {
     public class Utils
     {
-        public static ASPxGridView setDisplayGridView(ASPxGridView grd)
+        public static ASPxGridView setDisplayGridView(ASPxGridView grd, Boolean isShowExpan)
         {
 
             grd.SettingsText.CommandCancel = "Thoát";
@@ -43,7 +43,13 @@ namespace ReportFinance.Common
             grd.SettingsPager.PageSize = 20;
             grd.SettingsPager.Summary.Text = "Trang số {0} của {1} trang ({2} bản ghi)";
             grd.Settings.ShowFilterRow = true;
-            grd.Styles.Header.Wrap =  DevExpress.Utils.DefaultBoolean.True ;
+            grd.Styles.Header.Wrap = DevExpress.Utils.DefaultBoolean.True;
+            grd.SettingsText.EmptyDataRow = "Không tìm thấy dữ liệu";
+            if (isShowExpan)
+            {
+                grd.SettingsDetail.AllowOnlyOneMasterRowExpanded = true;
+                grd.SettingsDetail.ShowDetailRow = true;
+            }
 
             return grd;
         }
@@ -93,6 +99,28 @@ namespace ReportFinance.Common
 
         }
 
+        public static Boolean checkControlEmpty(Panel panel, String[] controls, Page page, Type type)
+        {
+            List<Error_Obj> lstError = new List<Error_Obj>();
+
+            foreach (String item in controls)
+            {
+                ASPxTextBox txtObj = panel.FindControl(item) as ASPxTextBox;
+                if (String.IsNullOrEmpty(txtObj.Text))
+                {
+                    lstError.Add(new Error_Obj { error = "[" + txtObj.HelpText   + "] không được để trống." });
+                }
+            }
+
+            if (lstError.Count > 0)
+            {
+                Utils.notifierPage(page,type, Constant.NOTIFY_FAILURE,  Utils.ListObject_2_Json<Error_Obj>(lstError),Constant .TIME_ERROR );
+                return false;
+            }
+            return true;
+        }
+
+    
 
         public static void notifierPage(Page page, Type type, String status, String content, Int32 Time)
         {
@@ -105,7 +133,7 @@ namespace ReportFinance.Common
                 script += "       delay: " + Time + " ,";
                 script += "       hide: true,";
                 script += "       type: 'info',";
-                script += "       width: '50%'";
+                script += "       width: '38%'";
 
                 script += "    });";
                 script += "  }";
@@ -116,15 +144,37 @@ namespace ReportFinance.Common
             {
                 String script = "";
                 script += "  window.onload = function () { ";
-                script += " new PNotify({";
-                script += "      text: '" + content.Replace("\r", "").Replace("\n", "") + "' ,";
-                script += "       delay: " + Time + " ,";
-                script += "       hide: true,";
-                script += "       type: 'error',";
-                script += "       width: '50%'";
-
-                script += "    });";
+                script += " PNotify.removeAll();";
+                script += " var cpMess = '" + content + "';";
+                script += " if (cpMess.charAt(0) == '[') {";
+                script += "      var a = JSON.parse(s.cpMess);";
                 script += "  }";
+
+                script += "   if (a instanceof Array) {";
+
+                script += "    for (var prop in a) {";
+
+                script += "         new PNotify({";
+                script += "              text: a[prop].error,";
+                script += "       delay: " + Time + " ,";
+                script += "           hide: true,";
+                script += "                width: '38%',";
+                script += "            type: 'error'";
+                script += "         });";
+                script += "      }";
+                script += "    }";
+                script += "   else {";
+
+                script += "       new PNotify({";
+                script += "           text: cpMess,";
+                script += "       delay: " + Time + " ,";
+                script += "        hide: true,";
+                script += "          width: '38%',";
+                script += "             type: 'error'";
+                script += "        });";
+                script += "    }";
+                script += "  }";
+
                 page.ClientScript.RegisterStartupScript(type, "myScript", script, true);
             }
 
@@ -133,7 +183,7 @@ namespace ReportFinance.Common
 
         public static string Encrypt(string clearText)
         {
-            string EncryptionKey = Constant.PASSWORD_ENCRYTION ;
+            string EncryptionKey = Constant.PASSWORD_ENCRYTION;
             byte[] clearBytes = Encoding.Unicode.GetBytes(clearText);
             using (Aes encryptor = Aes.Create())
             {
@@ -175,7 +225,7 @@ namespace ReportFinance.Common
             return cipherText;
         }
 
-        public static T setView2Object<T>(T obj,Panel panelObj)
+        public static T setView2ObjectPanel<T>(T obj, Panel panelObj)
         {
             Type type = obj.GetType();
             foreach (Control control in panelObj.Controls)
@@ -197,5 +247,27 @@ namespace ReportFinance.Common
             return obj;
         }
 
+        public static T setView2ObjectLayout<T>(T obj, ASPxFormLayout layout)
+        {
+            Type type = obj.GetType();
+
+                foreach (var item in type.GetProperties())
+                {
+                    var control = layout.FindControl(item.Name);
+                    if (control == null)
+                    {
+                        continue;
+                    }
+                    Type type1 = control.GetType();
+                    if (type1 == typeof(ASPxTextBox))
+                    {
+                        item.SetValue(obj, (control as ASPxTextBox).Text);
+                    }
+
+                }
+
+            
+            return obj;
+        }
     }
 }

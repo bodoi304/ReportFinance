@@ -53,7 +53,7 @@ namespace DataHelper
             {
 
                 user = (from s in context.Users where s.Id == Iduser select s).FirstOrDefault();
-
+                var a = user.Roles;
             }
             return user;
         }
@@ -65,10 +65,34 @@ namespace DataHelper
             {
 
                 user = (from s in context.Users where s.Id_Login == IdLogIn && s.Password == passWord select s).FirstOrDefault();
-
+                if (user == null)
+                {
+                    return null;
+                }
+                var a = user.Roles;
+                 foreach (Role item in user.Roles )
+                 {
+                     var b = item.MenuItemFunctions;
+                 }
             }
             return user;
         }
+
+        public List<MenuItemFunction> getMenuItem(User user)
+        {
+            List<MenuItemFunction> lstAll = new List<MenuItemFunction>();
+            using (var context = new ManageUsersEntities())
+            {
+               
+                foreach (Role item in user.Roles )
+                {
+                    lstAll.AddRange(item.MenuItemFunctions);
+                }
+               
+            }
+            return lstAll.Distinct<MenuItemFunction>().ToList<MenuItemFunction>();
+        }
+
 
         public User getUsersByIDLogin(String IdLogIn)
         {
@@ -129,6 +153,21 @@ namespace DataHelper
 
                 User user = (from s in context.Users where s.Id == Iduser select s).Single();
                 user.LockoutEnabled = !user.LockoutEnabled;
+
+                context.SaveChanges();
+
+            }
+
+        }
+
+        public void updateUserPassword(String idLogIn,String password)
+        {
+
+            using (var context = new ManageUsersEntities())
+            {
+
+                User user = (from s in context.Users where s.Id_Login == idLogIn select s).Single();
+                user.Password = password;
 
                 context.SaveChanges();
 

@@ -21,6 +21,19 @@ namespace DataHelper
             return roleList;
         }
 
+        public Role getRolesByName(String roleName)
+        {
+          Role role;
+            using (var context = new ManageUsersEntities())
+            {
+
+                role = (from s in context.Roles where s.Name == roleName select s).FirstOrDefault();
+
+
+            }
+            return role;
+        }
+
         public Role getRolesByID(Int32 Idrole)
         {
             Role role;
@@ -29,7 +42,7 @@ namespace DataHelper
 
                 role = (from s in context.Roles where s.Id == Idrole select s).FirstOrDefault();
                 var a = role.MenuItemFunctions;
-
+                var b = role.Users;
             }
             return role;
         }

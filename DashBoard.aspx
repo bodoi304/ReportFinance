@@ -18,6 +18,6 @@
     <div style="height: 100%;">
 
         <div class="bg">
-            <img src="images/backgroundDashboard.jpg"   width="100%"  height="100%" /></div>
+            <img src="/images/backgroundDashboard.jpg"   width="100%"  height="100%" /></div>
     </div>
 </asp:Content>

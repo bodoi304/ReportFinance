@@ -12,6 +12,9 @@ namespace ReportFinance.Common
         public const String NOTIFY_CLEAR = "clear";
         public const Int32 TIME_ERROR = 500000;
         public const Int32 TIME_SUCCESS = 3000;
-        public const String PASSWORD_ENCRYTION = "asdqwe#$^*&";
+        public const String PASSWORD_ENCRYTION = "YKLMH";
+        public const String USER_COOKIE = "caigiday";
+        public const String NAME_COOKIE = "1";
+        public const String FUNCTION_COOKIE = "2";
     }
 }

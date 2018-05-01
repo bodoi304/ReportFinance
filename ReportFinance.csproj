@@ -196,18 +196,17 @@
     <Content Include="js\site.js" />
     <Content Include="js\underscore-min.js" />
     <Content Include="Login\css\style.css" />
-    <Content Include="Login\DashBoard.aspx" />
-    <Content Include="Login\images\backgroundDashboard.jpg" />
+    <Content Include="DashBoard.aspx" />
+    <Content Include="images\backgroundDashboard.jpg" />
     <Content Include="Login\images\bg.jpg" />
     <Content Include="Login\images\loginlogo.png" />
-    <Content Include="Login\index.html" />
     <Content Include="Login\Login.aspx" />
-    <Content Include="MainBoard.aspx" />
     <Content Include="ManageUsers\Common\TreeListFunction.ascx" />
     <Content Include="ManageUsers\ManageRoles\ManageRolesMain.aspx" />
     <Content Include="ManageUsers\ManageRules\ManageRulesMain.aspx" />
     <Content Include="ManageUsers\ManageUsers\ManageUsersMain.aspx" />
     <Content Include="packages.config" />
+    <Content Include="test.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -247,11 +246,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Login\DashBoard.aspx.cs">
+    <Compile Include="DashBoard.aspx.cs">
       <DependentUpon>DashBoard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Login\DashBoard.aspx.designer.cs">
+    <Compile Include="DashBoard.aspx.designer.cs">
       <DependentUpon>DashBoard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login\Login.aspx.cs">
@@ -260,13 +259,6 @@
     </Compile>
     <Compile Include="Login\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="MainBoard.aspx.cs">
-      <DependentUpon>MainBoard.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MainBoard.aspx.designer.cs">
-      <DependentUpon>MainBoard.aspx</DependentUpon>
     </Compile>
     <Compile Include="ManageUsers\Common\TreeListFunction.ascx.cs">
       <DependentUpon>TreeListFunction.ascx</DependentUpon>
@@ -297,6 +289,13 @@
       <DependentUpon>ManageUsersMain.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="test.aspx.cs">
+      <DependentUpon>test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="test.aspx.designer.cs">
+      <DependentUpon>test.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
