@@ -54,7 +54,7 @@ namespace ReportFinance.ManageUsers.ManageUsers
                 e.Cancel = true;
                 Int32 idUser = Convert.ToInt32(e.Keys[grd_DSUsers.KeyFieldName]);
                 ASPxFormLayout pnLayData = grd_DSUsers.FindEditFormTemplateControl("LayOutThemSua") as ASPxFormLayout;
-                User user = new User();
+                User user = new User(); 
                 Utils.setView2ObjectLayout<User>(user, pnLayData);
                 ctlUser.updateUsers(idUser,user);
                 Bindata();
